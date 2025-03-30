@@ -1,3 +1,8 @@
+require("dotenv").config(); // Load environment variables from .env file
+console.log("GMAIL_USER:", process.env.GMAIL_USER);
+console.log("GMAIL_PASS:", process.env.GMAIL_PASS ? "Exists" : "Missing");
+
+
 const express = require("express");
 const nodemailer = require("nodemailer");
 const cors = require("cors");
@@ -19,9 +24,7 @@ app.use(cors({
 app.post("/send-email", async (req, res) => {
   const { name, email, subject, message } = req.body;
 
-  console.log("GMAIL_USER:", process.env.GMAIL_USER);
-  console.log("GMAIL_PASS:", process.env.GMAIL_PASS ? "Exists" : "Missing");
-
+  
 
   try {
     let transporter = nodemailer.createTransport({
