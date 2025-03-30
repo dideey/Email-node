@@ -1,4 +1,6 @@
-require("dotenv").config(); // Load environment variables from .env file
+import { config } from "dotenv";
+config({ path: "./.env" }); // Explicitly define the path
+
 import express, { json } from "express";
 import { createTransport } from "nodemailer";
 import cors from "cors";
