@@ -13,7 +13,7 @@ console.log("Loaded ENV Variables:", process.env);
 
 app.use(express.json());
 app.use(cors({
-  origin: "https://portfoliofrontend-sigma.vercel.app/",
+  origin: "*",
   methods: ["GET", "POST"],
   allowedHeaders: ["Content-Type"],
   credentials: true,
