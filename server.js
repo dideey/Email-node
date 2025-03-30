@@ -19,11 +19,16 @@ app.use(cors({
 app.post("/send-email", async (req, res) => {
   const { name, email, subject, message } = req.body;
 
+  console.log("GMAIL_USER:", process.env.GMAIL_USER);
+  console.log("GMAIL_PASS:", process.env.GMAIL_PASS ? "Exists" : "Missing");
+
+
   try {
     let transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
       port: 587,
       secure: false, // true for 465, false for other ports
+      
       auth: {
         user: process.env.GMAIL_USER, // my Gmail
         pass: process.env.GMAIL_PASS, // Gmail App Password
