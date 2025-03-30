@@ -18,6 +18,8 @@ app.use(cors({
   allowedHeaders: ["Content-Type"],
 }));
 
+app.options("*", cors()); // Handle preflight requests
+
 // Email sending route
 app.post("/send-email", async (req, res) => {
   const { name, email, subject, message } = req.body;
