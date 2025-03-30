@@ -1,9 +1,9 @@
-import { config } from "dotenv";
-config(); // Load environment variables
+const dotenv = require("dotenv");
+dotenv.config(); // Load environment variables
 
-import express from "express";
-import { createTransport } from "nodemailer";
-import cors from "cors";
+const express = require("express");
+const nodemailer = require("nodemailer");
+const cors = require("cors");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -26,10 +26,10 @@ app.post("/send-email", async (req, res) => {
   console.log("GMAIL_PASS:", process.env.GMAIL_PASS ? "Exists" : "Missing");
 
   try {
-    let transporter = createTransport({
+    let transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
       port: 587,
-      secure: false, // true for 465, false for other ports
+      secure: false,
       auth: {
         user: process.env.GMAIL_USER, 
         pass: process.env.GMAIL_PASS, 
