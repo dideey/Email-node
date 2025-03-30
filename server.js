@@ -3,17 +3,17 @@ console.log("GMAIL_USER:", process.env.GMAIL_USER);
 console.log("GMAIL_PASS:", process.env.GMAIL_PASS ? "Exists" : "Missing");
 
 
-const express = require("express");
-const nodemailer = require("nodemailer");
-const cors = require("cors");
-const dotenv = require("dotenv");
+import express, { json } from "express";
+import { createTransport } from "nodemailer";
+import cors from "cors";
+import { config } from "dotenv";
 
-dotenv.config();
+config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-app.use(express.json());
+app.use(json());
 app.use(cors({
   origin: "https://portfolio-1-ey9y.onrender.com", 
   methods: ["GET", "POST"],
@@ -27,7 +27,7 @@ app.post("/send-email", async (req, res) => {
   
 
   try {
-    let transporter = nodemailer.createTransport({
+    let transporter = createTransport({
       host: "smtp.gmail.com",
       port: 587,
       secure: false, // true for 465, false for other ports
