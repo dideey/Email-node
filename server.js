@@ -16,9 +16,11 @@ app.use(cors({
   origin: "https://portfoliofrontend-sigma.vercel.app/",
   methods: ["GET", "POST"],
   allowedHeaders: ["Content-Type"],
+  credentials: true,
 }));
 
 app.options("*", cors()); // Handle preflight requests
+app.use(express.json());
 
 // Email sending route
 app.post("/send-email", async (req, res) => {
@@ -26,6 +28,10 @@ app.post("/send-email", async (req, res) => {
 
   console.log("GMAIL_USER:", process.env.GMAIL_USER);
   console.log("GMAIL_PASS:", process.env.GMAIL_PASS ? "Exists" : "Missing");
+
+  if (!name || !email || !subject || !message) {
+    return res.status(400).json({ success: false, message: "Missing required fields" });
+  }
 
   try {
     let transporter = nodemailer.createTransport({
