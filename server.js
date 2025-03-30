@@ -1,19 +1,19 @@
 import { config } from "dotenv";
-config({ path: "./.env" }); // Explicitly define the path
+config(); // Load environment variables
 
-import express, { json } from "express";
+import express from "express";
 import { createTransport } from "nodemailer";
 import cors from "cors";
-import { config } from "dotenv";
-
-config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-app.use(json());
+// Debugging: Check if env variables are loaded
+console.log("Loaded ENV Variables:", process.env);
+
+app.use(express.json());
 app.use(cors({
-  origin: "https://portfolio-1-ey9y.onrender.com", 
+  origin: "https://portfolio-1-ey9y.onrender.com",
   methods: ["GET", "POST"],
   allowedHeaders: ["Content-Type"],
 }));
@@ -24,18 +24,15 @@ app.post("/send-email", async (req, res) => {
 
   console.log("GMAIL_USER:", process.env.GMAIL_USER);
   console.log("GMAIL_PASS:", process.env.GMAIL_PASS ? "Exists" : "Missing");
-  
-    
 
   try {
     let transporter = createTransport({
       host: "smtp.gmail.com",
       port: 587,
       secure: false, // true for 465, false for other ports
-      
       auth: {
-        user: process.env.GMAIL_USER, // my Gmail
-        pass: process.env.GMAIL_PASS, // Gmail App Password
+        user: process.env.GMAIL_USER, 
+        pass: process.env.GMAIL_PASS, 
       },
       tls: {
         rejectUnauthorized: false,
