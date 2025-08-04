@@ -8,9 +8,6 @@ const cors = require("cors");
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Debugging: Check if env variables are loaded
-console.log("Loaded ENV Variables:", process.env);
-
 app.use(express.json());
 app.use(cors({
   origin: "https://portfoliofrontend-sigma.vercel.app",
@@ -26,8 +23,6 @@ app.use(express.json());
 app.post("/send-email", async (req, res) => {
   const { name, email, subject, message } = req.body;
 
-  console.log("GMAIL_USER:", process.env.GMAIL_USER);
-  console.log("GMAIL_PASS:", process.env.GMAIL_PASS ? "Exists" : "Missing");
 
   if (!name || !email || !subject || !message) {
     return res.status(400).json({ success: false, message: "Missing required fields" });
